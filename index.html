@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashtag Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md text-center">
+        <h1 class="text-3xl font-bold mb-4">Hashtag Master</h1>
+        <p class="text-gray-600 mb-6">Generate trending Instagram hashtags instantly.</p>
+
+        <input type="text" id="keywordsInput" class="w-full p-3 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter keywords (e.g., sunset, beach, travel)">
+        
+        <button id="generateButton" class="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition-colors duration-200">
+            Generate Hashtags
+        </button>
+
+        <div id="resultArea" class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-md hidden">
+            <textarea id="hashtagsOutput" class="w-full h-32 p-2 border-none resize-none focus:outline-none bg-transparent" readonly></textarea>
+            <button id="copyButton" class="mt-4 bg-green-600 text-white p-2 rounded-md hover:bg-green-700 transition-colors duration-200">
+                Copy to Clipboard
+            </button>
+        </div>
+
+        <p class="mt-8 text-sm text-gray-500">Powered by APEX</p>
+    </div>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', async () => {
+            const keywords = document.getElementById('keywordsInput').value;
+            if (!keywords) return alert('Please enter some keywords!');
+
+            document.getElementById('generateButton').textContent = 'Generating...';
+            document.getElementById('generateButton').disabled = true;
+
+            // In a real app, this would call a serverless function
+            // For this demo, we simulate a response
+            const simulatedHashtags = `#${keywords.split(',').map(k => k.trim().replace(/\s/g, '')).join(' #')}
+#travelgram #instatravel #beachlife #sunsetlover #wanderlust`;
+
+            setTimeout(() => {
+                document.getElementById('hashtagsOutput').value = simulatedHashtags;
+                document.getElementById('resultArea').classList.remove('hidden');
+                document.getElementById('generateButton').textContent = 'Generate Hashtags';
+                document.getElementById('generateButton').disabled = false;
+            }, 1500);
+        });
+
+        document.getElementById('copyButton').addEventListener('click', () => {
+            const hashtagsOutput = document.getElementById('hashtagsOutput');
+            hashtagsOutput.select();
+            document.execCommand('copy');
+            alert('Hashtags copied to clipboard!');
+        });
+    </script>
+</body>
+</html>
